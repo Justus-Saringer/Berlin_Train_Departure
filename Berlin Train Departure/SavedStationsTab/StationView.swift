@@ -7,7 +7,6 @@ struct StationView: View {
     
     var body: some View {
         HStack {
-            
             VStack(alignment: .leading) {
                 HStack {
                     if viewModel.selected {

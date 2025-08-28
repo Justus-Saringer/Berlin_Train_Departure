@@ -1,7 +1,7 @@
 import Foundation
 
 struct Throttler {
-    var throttleIntervalInSeconds = 0.5
+    var throttleIntervalInSeconds = 1.0
     private var lastCallTime: TimeInterval = Date().timeIntervalSince1970
     
     private var now: TimeInterval {
