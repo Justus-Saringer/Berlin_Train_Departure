@@ -49,7 +49,8 @@ struct StationView: View {
                                          meansOfTransport: [
                                             MeansOfTransport(isActive: true, type: .bus, name: "N56"),
                                             MeansOfTransport(isActive: true, type: .tram, name: "M6"),
-                                            MeansOfTransport(isActive: false, type: .tram, name: "16"),
+                                            MeansOfTransport(isActive: false, type: .train, name: "16"),
+                                            MeansOfTransport(isActive: true, type: .subway, name: "16"),
                                          ])
     StationView(viewModel: viewModel)
         .frame(maxWidth: .infinity, alignment: .leading)

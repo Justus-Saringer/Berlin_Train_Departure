@@ -24,9 +24,38 @@ final class SavedStationsViewModel: ObservableObject {
             savedStations[index].selected = index == 0 || index == 1
         }
     }
+    
+    func saveStation(_ station: Station) {
+        var transport: [MeansOfTransport] = []
+        
+        if station.products.bus == true {
+            transport.append(MeansOfTransport(isActive: true, type: .bus, name: "Bus"))
+        }
+        if station.products.tram == true {
+            transport.append(MeansOfTransport(isActive: true, type: .tram, name: "Tram"))
+        }
+        if station.products.subway == true {
+            transport.append(MeansOfTransport(isActive: true, type: .subway, name: "Subway"))
+        }
+        if station.products.regional == true {
+            transport.append(MeansOfTransport(isActive: true, type: .train, name: "Train"))
+        }
+        if station.products.ferry == true {
+            transport.append(MeansOfTransport(isActive: true, type: .ferry, name: "Ferry"))
+        }
+        
+        let newStation = StationViewViewModel(
+            stationName: station.name,
+            stationId: station.id,
+            selected: false,
+            meansOfTransport: transport
+        )
+        
+        savedStations.append(newStation)
+    }
 }
 
-struct SavedStationsView: View {
+struct SavedStationsScreen: View {
     @ObservedObject var viewModel: SavedStationsViewModel
     
     var body: some View {
@@ -51,10 +80,27 @@ struct SavedStationsView: View {
             }
             .toolbarBackground(.visible, for: .navigationBar)
             .sheet(isPresented: $viewModel.isInfoSheetVisible) {
-                // TODO: add proper explanation
-                Text("Hello World!!!")
-                    .presentationDetents([.medium])
-                    .presentationDragIndicator(.visible)
+                
+                TabView {
+                    FirstPage()
+                        .padding()
+                    
+                    SecondPage()
+                        .padding()
+                    
+                    VStack {
+                        Text("You can drag them to reorder them. Swipe left on an item to delete it.")
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                .padding(.top)
+                .tabViewStyle(.page(indexDisplayMode: .always))
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                
+                
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
             }
         }
     }
@@ -76,8 +122,8 @@ struct SavedStationsView: View {
                              meansOfTransport: [
                                 MeansOfTransport(isActive: true, type: .bus, name: "166"),
                                 MeansOfTransport(isActive: true, type: .tram, name: "165"),
-                                MeansOfTransport(isActive: false, type: .tram, name: "U2"),
+                                MeansOfTransport(isActive: false, type: .subway, name: "U2"),
                              ])
     ])
-    SavedStationsView(viewModel: viewModel)
+    SavedStationsScreen(viewModel: viewModel)
 }

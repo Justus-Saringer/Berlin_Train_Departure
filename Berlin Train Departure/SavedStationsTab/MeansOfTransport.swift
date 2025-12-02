@@ -6,6 +6,7 @@ enum MeansOfTranportType {
     case tram
     case subway
     case train
+    case ferry
 }
 
 struct MeansOfTransport: Identifiable {
@@ -22,6 +23,8 @@ struct MeansOfTransport: Identifiable {
             return .yellow
         case .train:
             return .green
+        case .ferry:
+            return .blue
         }
     }
     var name: String

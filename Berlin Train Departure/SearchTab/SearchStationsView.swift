@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SearchStationsView: View {
     @ObservedObject var viewModel: SearchStatioViewModel
+    var onStationClicked: (Station) -> Void
     
     var body: some View {
         NavigationView {
@@ -10,6 +11,9 @@ struct SearchStationsView: View {
                 List(viewModel.stations) { station in
                     Text(station.name)
                         .listRowBackground(Color.yellow)
+                        .onTapGesture {
+                            onStationClicked(station)
+                        }
                 }
                 .searchable(text: $viewModel.searchText)
                 .navigationBarTitleDisplayMode(.large)
@@ -30,5 +34,7 @@ struct SearchStationsView: View {
             Station(type: "2", id: "2", name: "Bahnhof", location: location, products: products),
             Station(type: "3", id: "3", name: "Spittelmarkt", location: location, products: products),
         ]
-    ))
+    ),
+                       onStationClicked: { station in }
+    )
 }
